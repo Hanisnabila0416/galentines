@@ -10,6 +10,7 @@
             --burgundy: #4a1616;
             --cream: #f5f1e8;
             --dark-brown: #3d1f1f;
+            --text-brown: #5c3333;
         }
 
         * {
@@ -20,7 +21,7 @@
         }
 
         body {
-            background-color: #000; /* Dark background like the photo */
+            background-color: #000;
             font-family: 'Playfair Display', serif;
             display: flex;
             justify-content: center;
@@ -29,7 +30,6 @@
             overflow: hidden;
         }
 
-        /* Container acts as the iPhone screen area */
         .iphone-frame {
             width: 100%;
             max-width: 400px;
@@ -38,10 +38,8 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* The Invite Section */
         #page1 {
             flex: 1;
             display: flex;
@@ -55,42 +53,69 @@
         .lace-container {
             background-color: var(--cream);
             padding: 40px 20px;
-            width: 90%;
-            border: 15px solid transparent;
-            /* Using a lace-like border effect */
+            width: 92%;
+            border: 12px solid transparent;
             border-image: radial-gradient(circle, var(--cream) 4px, transparent 5px) 100% / 1 / 0 repeat;
             outline: 2px solid var(--cream);
             outline-offset: -10px;
             text-align: center;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
         }
 
-        .sub-header { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 2px; color: var(--dark-brown); }
+        .sub-header { 
+            font-family: 'Cinzel', serif; 
+            font-size: 13px; 
+            letter-spacing: 2px; 
+            color: var(--text-brown); 
+        }
         
         h1 { 
-            font-size: 42px; 
+            font-size: 44px; 
             color: var(--burgundy); 
-            margin: 10px 0; 
+            margin: 15px 0; 
             font-style: italic; 
-            line-height: 0.9;
+            font-weight: 400;
+            line-height: 0.8;
         }
 
-        .details { border-top: 1px solid var(--dark-brown); border-bottom: 1px solid var(--dark-brown); margin: 20px 0; padding: 10px 0; }
-        .details p { font-size: 18px; color: var(--dark-brown); text-transform: uppercase; }
+        /* FIXED MONDAY COLOR HERE */
+        .day-text {
+            font-family: 'Cinzel', serif;
+            color: var(--text-brown);
+            letter-spacing: 4px;
+            font-size: 16px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
 
-        /* The RSVP Bottom Drawer */
+        .details { 
+            border-top: 1px solid #d1c7b7; 
+            border-bottom: 1px solid #d1c7b7; 
+            margin: 15px 0; 
+            padding: 12px 0; 
+        }
+
+        .details p { 
+            font-size: 18px; 
+            color: var(--text-brown); 
+            text-transform: uppercase;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
         .rsvp-drawer {
             background-color: var(--cream);
-            padding: 30px 20px 50px 20px;
+            padding: 30px 20px 60px 20px;
             text-align: center;
-            border-radius: 20px 20px 0 0;
+            border-radius: 25px 25px 0 0;
         }
 
         .rsvp-drawer h2 {
             font-family: 'Cinzel', serif;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 25px;
-            color: var(--dark-brown);
+            color: var(--text-brown);
+            letter-spacing: 1px;
         }
 
         .btn-container {
@@ -100,23 +125,23 @@
         }
 
         button {
-            padding: 12px 30px;
+            padding: 14px 0;
             font-family: 'Cinzel', serif;
-            font-size: 14px;
-            border-radius: 5px;
+            font-size: 13px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: 0.3s;
-            width: 120px;
+            width: 130px;
+            letter-spacing: 1px;
+            transition: 0.2s;
         }
 
         .btn-no { background: transparent; border: 1px solid var(--burgundy); color: var(--burgundy); }
         .btn-yes { background: var(--burgundy); border: none; color: var(--cream); }
 
-        /* Final Page View */
         #page2 {
             position: absolute;
             top: 0;
-            left: 100%; /* Hidden to the right */
+            left: 100%;
             width: 100%;
             height: 100%;
             background: var(--cream);
@@ -129,7 +154,7 @@
             text-align: center;
         }
 
-        .show-rsvp #page1 { transform: translateX(-100%); }
+        .show-rsvp #page1, .show-rsvp #drawer { transform: translateX(-100%); transition: 0.5s; }
         .show-rsvp #page2 { left: 0; }
 
     </style>
@@ -142,7 +167,7 @@
                 <p class="sub-header">You're Invited</p>
                 <h1>Galentine's Party</h1>
                 
-                <p style="margin-top: 20px; font-weight: bold;">MONDAY</p>
+                <p class="day-text">MONDAY</p>
                 
                 <div class="details">
                     <p>February 16th | 8 PM</p>
@@ -153,17 +178,17 @@
         </div>
 
         <div class="rsvp-drawer" id="drawer">
-            <h2>Do you want to go?</h2>
+            <h2>DO YOU WANT TO GO?</h2>
             <div class="btn-container">
-                <button class="btn-no" onclick="alert('Maybe next time! ❤️')">No</button>
-                <button class="btn-yes" onclick="goToRSVP()">I Do</button>
+                <button class="btn-no" onclick="alert('Booo! Hope you change your mind! ❤️')">NO</button>
+                <button class="btn-yes" onclick="goToRSVP()">I DO</button>
             </div>
         </div>
 
         <div id="page2">
-            <h1 style="font-size: 50px;">Yay!</h1>
-            <p style="font-family: 'Cinzel'; margin-top: 20px;">See you there, bestie! 🥂</p>
-            <button class="btn-no" style="margin-top: 40px;" onclick="location.reload()">Back</button>
+            <h1 style="font-size: 60px;">Yay!</h1>
+            <p style="font-family: 'Cinzel'; margin-top: 10px; letter-spacing: 2px;">SEE YOU THERE, BESTIE! 🥂</p>
+            <button class="btn-no" style="margin-top: 50px;" onclick="location.reload()">BACK</button>
         </div>
     </div>
 
