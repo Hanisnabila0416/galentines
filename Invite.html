@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galentine's Party</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burgundy: #4a1616;
+            --cream: #f5f1e8;
+            --dark-brown: #3d1f1f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #000; /* Dark background like the photo */
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Container acts as the iPhone screen area */
+        .iphone-frame {
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--burgundy);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        /* The Invite Section */
+        #page1 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .lace-container {
+            background-color: var(--cream);
+            padding: 40px 20px;
+            width: 90%;
+            border: 15px solid transparent;
+            /* Using a lace-like border effect */
+            border-image: radial-gradient(circle, var(--cream) 4px, transparent 5px) 100% / 1 / 0 repeat;
+            outline: 2px solid var(--cream);
+            outline-offset: -10px;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sub-header { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 2px; color: var(--dark-brown); }
+        
+        h1 { 
+            font-size: 42px; 
+            color: var(--burgundy); 
+            margin: 10px 0; 
+            font-style: italic; 
+            line-height: 0.9;
+        }
+
+        .details { border-top: 1px solid var(--dark-brown); border-bottom: 1px solid var(--dark-brown); margin: 20px 0; padding: 10px 0; }
+        .details p { font-size: 18px; color: var(--dark-brown); text-transform: uppercase; }
+
+        /* The RSVP Bottom Drawer */
+        .rsvp-drawer {
+            background-color: var(--cream);
+            padding: 30px 20px 50px 20px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .rsvp-drawer h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: var(--dark-brown);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 120px;
+        }
+
+        .btn-no { background: transparent; border: 1px solid var(--burgundy); color: var(--burgundy); }
+        .btn-yes { background: var(--burgundy); border: none; color: var(--cream); }
+
+        /* Final Page View */
+        #page2 {
+            position: absolute;
+            top: 0;
+            left: 100%; /* Hidden to the right */
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: left 0.5s ease-in-out;
+            color: var(--burgundy);
+            text-align: center;
+        }
+
+        .show-rsvp #page1 { transform: translateX(-100%); }
+        .show-rsvp #page2 { left: 0; }
+
+    </style>
+</head>
+<body>
+
+    <div class="iphone-frame" id="mainContainer">
+        <div id="page1">
+            <div class="lace-container">
+                <p class="sub-header">You're Invited</p>
+                <h1>Galentine's Party</h1>
+                
+                <p style="margin-top: 20px; font-weight: bold;">MONDAY</p>
+                
+                <div class="details">
+                    <p>February 16th | 8 PM</p>
+                </div>
+
+                <p class="sub-header">The Hideout,<br>Kuala Lumpur</p>
+            </div>
+        </div>
+
+        <div class="rsvp-drawer" id="drawer">
+            <h2>Do you want to go?</h2>
+            <div class="btn-container">
+                <button class="btn-no" onclick="alert('Maybe next time! ❤️')">No</button>
+                <button class="btn-yes" onclick="goToRSVP()">I Do</button>
+            </div>
+        </div>
+
+        <div id="page2">
+            <h1 style="font-size: 50px;">Yay!</h1>
+            <p style="font-family: 'Cinzel'; margin-top: 20px;">See you there, bestie! 🥂</p>
+            <button class="btn-no" style="margin-top: 40px;" onclick="location.reload()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        function goToRSVP() {
+            document.getElementById('mainContainer').classList.add('show-rsvp');
+        }
+    </script>
+</body>
+</html>
