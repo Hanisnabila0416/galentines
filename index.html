@@ -6,77 +6,35 @@
     <title>Galentine's Party</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --burgundy: #4a1616;
-            --cream: #f5f1e8;
-            --text-brown: #5c3333;
-        }
-
+        :root { --burgundy: #4a1616; --cream: #f5f1e8; --text-brown: #5c3333; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background-color: #1a0808;
-            font-family: 'Playfair Display', serif;
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; width: 100vw; overflow: hidden;
-        }
-
-        .iphone-frame {
-            width: 100%; max-width: 430px; height: 100%; max-height: 932px;
-            background-color: var(--burgundy); position: relative;
-            display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 0 100px rgba(0,0,0,0.8);
-        }
-
+        body { background-color: #1a0808; font-family: 'Playfair Display', serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        
+        .iphone-frame { width: 100%; max-width: 430px; height: 100%; max-height: 932px; background-color: var(--burgundy); position: relative; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 100px rgba(0,0,0,0.8); }
         @media (min-width: 768px) { .iphone-frame { border-radius: 40px; height: 85vh; border: 8px solid #222; } }
 
-        #page1 {
-            flex: 1; display: flex; flex-direction: column; align-items: center;
-            justify-content: center; padding: 40px 20px;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        #page1, #page2, #adminPage { position: absolute; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #page1 { padding-bottom: 200px; } /* Space for drawer */
+        #page2 { left: 100%; background: var(--cream); z-index: 20; color: var(--burgundy); }
+        #adminPage { top: -100%; background: var(--cream); z-index: 30; padding: 40px; color: var(--burgundy); }
 
-        .lace-container {
-            background-color: var(--cream); padding: 40px 20px; width: 92%;
-            border: 12px solid transparent;
-            border-image: radial-gradient(circle, var(--cream) 4px, transparent 5px) 100% / 1 / 0 repeat;
-            outline: 2px solid var(--cream); outline-offset: -10px; text-align: center;
-        }
-
-        h1 { font-size: 44px; color: var(--burgundy); margin: 15px 0; font-style: italic; line-height: 0.8; }
-        .sub-header { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; color: var(--text-brown); }
+        .lace-container { background-color: var(--cream); padding: 40px 20px; width: 92%; border: 12px solid transparent; border-image: radial-gradient(circle, var(--cream) 4px, transparent 5px) 100% / 1 / 0 repeat; outline: 2px solid var(--cream); outline-offset: -10px; text-align: center; }
+        h1 { font-size: 42px; color: var(--burgundy); margin: 10px 0; font-style: italic; font-weight: 400; cursor: pointer; }
         
-        .rsvp-drawer {
-            background-color: var(--cream); padding: 30px 20px 60px 20px;
-            text-align: center; border-radius: 25px 25px 0 0;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Name Input Styling */
-        input {
-            width: 80%; padding: 10px; margin-bottom: 20px;
-            border: 1px solid #d1c7b7; background: transparent;
-            font-family: 'Playfair Display'; text-align: center;
-            font-size: 16px; color: var(--burgundy); border-radius: 4px;
-        }
-
+        .rsvp-drawer { position: absolute; bottom: 0; width: 100%; background-color: var(--cream); padding: 30px 20px 60px; text-align: center; border-radius: 25px 25px 0 0; transition: transform 0.6s; }
+        input { width: 85%; padding: 12px; margin-bottom: 20px; border: none; border-bottom: 2px solid var(--burgundy); background: rgba(74,22,22,0.05); font-family: 'Playfair Display'; font-style: italic; text-align: center; font-size: 18px; color: var(--burgundy); outline: none; }
+        
         .btn-container { display: flex; gap: 10px; justify-content: center; }
-        button { padding: 14px 0; font-family: 'Cinzel', serif; font-size: 12px; width: 120px; cursor: pointer; border-radius: 4px;}
+        button { padding: 14px 0; font-family: 'Cinzel', serif; font-size: 12px; width: 120px; cursor: pointer; border-radius: 4px; border: none; }
         .btn-no { background: transparent; border: 1px solid var(--burgundy); color: var(--burgundy); }
-        .btn-yes { background: var(--burgundy); border: none; color: var(--cream); }
+        .btn-yes { background: var(--burgundy); color: var(--cream); }
 
-        #page2 {
-            position: absolute; top: 0; left: 100%; width: 100%; height: 100%;
-            background: var(--cream); display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 20;
-        }
-
-        .show-rsvp #page1, .show-rsvp #drawer { transform: translateX(-100%); }
+        .show-rsvp #page1, .show-rsvp .rsvp-drawer { transform: translateX(-100%); }
         .show-rsvp #page2 { left: 0; }
+        .show-admin #adminPage { top: 0; }
 
-        .loading-text { font-size: 12px; color: var(--burgundy); margin-top: 10px; display: none; }
+        .guest-list { width: 100%; margin-top: 20px; text-align: left; font-family: 'Cinzel'; font-size: 14px; overflow-y: auto; }
+        .guest-item { border-bottom: 1px solid #d1c7b7; padding: 10px 0; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
@@ -84,23 +42,22 @@
     <div class="iphone-frame" id="mainContainer">
         <div id="page1">
             <div class="lace-container">
-                <p class="sub-header">You're Invited</p>
-                <h1>Galentine's Party</h1>
-                <p style="font-family:'Cinzel'; font-weight:bold; color:var(--text-brown); margin-top:20px;">MONDAY</p>
+                <p style="font-family:'Cinzel'; letter-spacing:2px;">You're Invited</p>
+                <h1 ondblclick="openAdmin()">Galentine's Party</h1>
+                <p style="font-family:'Cinzel'; font-weight:bold; margin-top:20px;">MONDAY</p>
                 <div style="border-top:1px solid #d1c7b7; border-bottom:1px solid #d1c7b7; margin:15px 0; padding:10px 0;">
-                    <p style="font-family:'Cinzel'; color:var(--text-brown);">FEBRUARY 16TH | 8 PM</p>
+                    <p style="font-family:'Cinzel';">FEBRUARY 16TH | 8 PM</p>
                 </div>
-                <p class="sub-header">The Hideout, KL</p>
+                <p style="font-family:'Cinzel';">The Hideout, KL</p>
             </div>
         </div>
 
         <div class="rsvp-drawer" id="drawer">
-            <input type="text" id="guestName" placeholder="Enter your name..." required>
+            <input type="text" id="guestName" placeholder="ENTER YOUR NAME...">
             <div class="btn-container">
-                <button class="btn-no" onclick="alert('Maybe next time! ❤️')">NO</button>
+                <button class="btn-no" onclick="alert('Booo! ❤️')">NO</button>
                 <button class="btn-yes" id="submitBtn" onclick="saveRSVP()">I DO</button>
             </div>
-            <p id="loading" class="loading-text">Sending your RSVP...</p>
         </div>
 
         <div id="page2">
@@ -108,34 +65,53 @@
             <p style="font-family:'Cinzel'; letter-spacing:2px;">SEE YOU THERE, <span id="displayName">BESTIE</span>! 🥂</p>
             <button class="btn-no" style="margin-top:40px;" onclick="location.reload()">BACK</button>
         </div>
+
+        <div id="adminPage">
+            <h2 style="font-family:'Cinzel';">Guest List</h2>
+            <div class="guest-list" id="listContent">Loading besties...</div>
+            <button class="btn-yes" style="margin-top:20px;" onclick="document.getElementById('mainContainer').classList.remove('show-admin')">CLOSE</button>
+        </div>
     </div>
 
     <script>
-        // PASTE YOUR GOOGLE WEB APP URL HERE
-        const GOOGLE_URL = "YOUR_DEPLOYED_URL_HERE";
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbyrhctkoKBOHt_QDSacH89hoT84dR48Mu6CMAezKx1qGXabNcA_y5lh0amKacqOpnrnwA/exec";
 
         async function saveRSVP() {
             const name = document.getElementById('guestName').value;
-            if (!name) { alert("Please enter your name first!"); return; }
-
-            document.getElementById('loading').style.display = 'block';
+            if (!name) { alert("Please enter your name!"); return; }
             document.getElementById('submitBtn').disabled = true;
+            
+            fetch(GOOGLE_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({ name: name })
+            });
 
+            document.getElementById('displayName').innerText = name.toUpperCase();
+            document.getElementById('mainContainer').classList.add('show-rsvp');
+        }
+
+        function openAdmin() {
+            const pw = prompt("Enter Admin Password:");
+            if (pw === "besties2026") {
+                document.getElementById('mainContainer').classList.add('show-admin');
+                fetchList();
+            } else {
+                alert("Nice try, but no!");
+            }
+        }
+
+        async function fetchList() {
             try {
-                // Sending data to Google Sheets
-                await fetch(GOOGLE_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Needed for Google Apps Script
-                    cache: 'no-cache',
-                    body: JSON.stringify({ name: name })
+                const response = await fetch(GOOGLE_URL);
+                const guests = await response.json();
+                let html = "";
+                guests.forEach(g => {
+                    html += `<div class="guest-item"><span>${g.name}</span> <span style="font-size:10px;">${new Date(g.date).toLocaleDateString()}</span></div>`;
                 });
-
-                // Move to "Yay" page
-                document.getElementById('displayName').innerText = name.toUpperCase();
-                document.getElementById('mainContainer').classList.add('show-rsvp');
-            } catch (error) {
-                console.error(error);
-                alert("Something went wrong, but you're still invited!");
+                document.getElementById('listContent').innerHTML = html || "No RSVPs yet!";
+            } catch (e) {
+                document.getElementById('listContent').innerHTML = "Check your Google Sheet!";
             }
         }
     </script>
