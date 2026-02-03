@@ -21,31 +21,29 @@
         }
 
         body {
-            background-color: #1a0808; /* Slightly lighter dark for iPad background contrast */
+            background-color: #1a0808;
             font-family: 'Playfair Display', serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             width: 100vw;
-            overflow: hidden;
+            overflow: hidden; /* Prevents scrolling on iPad */
         }
 
-        /* The "Frame" that centers the invite on iPad */
         .iphone-frame {
             width: 100%;
-            max-width: 430px; /* Standard iPhone Pro Max width */
+            max-width: 430px; 
             height: 100%;
-            max-height: 932px; /* Standard iPhone height */
+            max-height: 932px; 
             background-color: var(--burgundy);
             position: relative;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 100px rgba(0,0,0,0.8); /* Depth effect for iPad */
-            border-radius: 0; /* Flat for iPhone */
+            overflow: hidden; /* THIS FIXES THE IPAD DOUBLE PAGE ISSUE */
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
 
-        /* Adds rounded corners only when on iPad/Tablet */
         @media (min-width: 768px) {
             .iphone-frame {
                 border-radius: 40px;
@@ -61,7 +59,7 @@
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .lace-container {
@@ -73,93 +71,33 @@
             outline: 2px solid var(--cream);
             outline-offset: -10px;
             text-align: center;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
         }
 
-        .sub-header { 
-            font-family: 'Cinzel', serif; 
-            font-size: 13px; 
-            letter-spacing: 2px; 
-            color: var(--text-brown); 
-        }
-        
-        h1 { 
-            font-size: 44px; 
-            color: var(--burgundy); 
-            margin: 15px 0; 
-            font-style: italic; 
-            font-weight: 400;
-            line-height: 0.8;
-        }
+        .sub-header { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; color: var(--text-brown); }
+        h1 { font-size: 44px; color: var(--burgundy); margin: 15px 0; font-style: italic; font-weight: 400; line-height: 0.8; }
+        .day-text { font-family: 'Cinzel', serif; color: var(--text-brown); letter-spacing: 4px; font-size: 16px; margin-top: 25px; font-weight: bold; }
 
-        .day-text {
-            font-family: 'Cinzel', serif;
-            color: var(--text-brown);
-            letter-spacing: 4px;
-            font-size: 16px;
-            margin-top: 25px;
-            font-weight: bold;
-        }
-
-        .details { 
-            border-top: 1px solid #d1c7b7; 
-            border-bottom: 1px solid #d1c7b7; 
-            margin: 15px 0; 
-            padding: 12px 0; 
-        }
-
-        .details p { 
-            font-size: 18px; 
-            color: var(--text-brown); 
-            text-transform: uppercase;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-        }
+        .details { border-top: 1px solid #d1c7b7; border-bottom: 1px solid #d1c7b7; margin: 15px 0; padding: 12px 0; }
+        .details p { font-size: 18px; color: var(--text-brown); text-transform: uppercase; font-family: 'Cinzel', serif; }
 
         .rsvp-drawer {
             background-color: var(--cream);
             padding: 30px 20px 60px 20px;
             text-align: center;
             border-radius: 25px 25px 0 0;
-            z-index: 10;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @media (min-width: 768px) {
-            .rsvp-drawer { border-radius: 25px 25px 32px 32px; } /* Match iPad frame corners */
-        }
-
-        .rsvp-drawer h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 15px;
-            margin-bottom: 25px;
-            color: var(--text-brown);
-            letter-spacing: 1px;
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 14px 0;
-            font-family: 'Cinzel', serif;
-            font-size: 13px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 130px;
-            letter-spacing: 1px;
-            transition: 0.2s;
-        }
-
+        .btn-container { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        button { padding: 14px 0; font-family: 'Cinzel', serif; font-size: 13px; border-radius: 4px; cursor: pointer; width: 130px; }
         .btn-no { background: transparent; border: 1px solid var(--burgundy); color: var(--burgundy); }
         .btn-yes { background: var(--burgundy); border: none; color: var(--cream); }
 
+        /* THE SECOND PAGE - NOW FULLY HIDDEN OFF-SCREEN */
         #page2 {
             position: absolute;
             top: 0;
-            left: 100%;
+            left: 100%; 
             width: 100%;
             height: 100%;
             background: var(--cream);
@@ -167,15 +105,19 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: left 0.5s ease-in-out;
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             color: var(--burgundy);
             text-align: center;
             z-index: 20;
-            border-radius: inherit;
         }
 
-        .show-rsvp #page1, .show-rsvp #drawer { opacity: 0; transform: scale(0.9); transition: 0.5s; }
-        .show-rsvp #page2 { left: 0; }
+        /* ANIMATION LOGIC */
+        .show-rsvp #page1, .show-rsvp #drawer { 
+            transform: translateX(-100%); 
+        }
+        .show-rsvp #page2 { 
+            left: 0; 
+        }
 
     </style>
 </head>
@@ -186,19 +128,16 @@
             <div class="lace-container">
                 <p class="sub-header">You're Invited</p>
                 <h1>Galentine's Party</h1>
-                
                 <p class="day-text">MONDAY</p>
-                
                 <div class="details">
                     <p>February 16th | 8 PM</p>
                 </div>
-
                 <p class="sub-header">The Hideout,<br>Kuala Lumpur</p>
             </div>
         </div>
 
         <div class="rsvp-drawer" id="drawer">
-            <h2>DO YOU WANT TO GO?</h2>
+            <h2 style="font-family: 'Cinzel'; font-size: 15px; color: var(--text-brown);">DO YOU WANT TO GO?</h2>
             <div class="btn-container">
                 <button class="btn-no" onclick="alert('Booo! Hope you change your mind! ❤️')">NO</button>
                 <button class="btn-yes" onclick="goToRSVP()">I DO</button>
